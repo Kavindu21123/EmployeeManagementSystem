@@ -4,3 +4,12 @@ GET {{EmployeeManagement.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+POST {{EmployeeManagement.API_HostAddress}}/api/employee
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "salary": -500, 
+  "departmentId": 1
+}

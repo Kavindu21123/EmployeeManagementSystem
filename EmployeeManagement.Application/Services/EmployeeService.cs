@@ -1,17 +1,20 @@
 using EmployeeManagement.Application.DTOs;
 using EmployeeManagement.Application.Interfaces;
 using EmployeeManagement.Domain.Entities;
+using FluentValidation;
 
 namespace EmployeeManagement.Application.Services;
 
 public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
+    private readonly IValidator<CreateEmployeeDto> _validator; // 2. Add the bouncer
 
     // Dependency Injection: The interface is injected here!
-    public EmployeeService(IEmployeeRepository repository)
+    public EmployeeService(IEmployeeRepository repository, IValidator<CreateEmployeeDto> validator)
     {
         _repository = repository;
+        _validator = validator;
     }
 
     public async Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync()
@@ -46,6 +49,16 @@ public class EmployeeService : IEmployeeService
 
     public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto dto)
     {
+
+        // 4. Check the rules before doing anything else
+        var validationResult = await _validator.ValidateAsync(dto);
+        if (!validationResult.IsValid)
+        {
+            // If it fails, throw an error immediately 
+            var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException($"Validation failed: {errors}");
+        }
+
         // Map DTO to Domain Entity
         var employee = new Employee
         {

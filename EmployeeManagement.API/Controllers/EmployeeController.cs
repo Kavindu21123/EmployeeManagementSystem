@@ -48,22 +48,16 @@ public class EmployeeController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, UpdateEmployeeDto dto)
     {
-        if (id != dto.Id) 
+        if (id != dto.Id)
         {
-            // Returns HTTP 400 if the URL ID doesn't match the JSON body ID
-            return BadRequest("ID mismatch"); 
+            return BadRequest("ID mismatch");
         }
 
-        try
-        {
-            await _employeeService.UpdateEmployeeAsync(dto);
-            return NoContent(); // Returns HTTP 204 (Success, but no data to return)
-        }
-        catch (Exception ex)
-        {
-            // If the service throws our "Employee not found" exception
-            return NotFound(ex.Message); 
-        }
+        // Call the service without a try-catch. 
+        // If validation fails, or if the employee isn't found, the Global Exception Handler will catch it automatically.
+        await _employeeService.UpdateEmployeeAsync(dto);
+
+        return NoContent();
     }
 
 

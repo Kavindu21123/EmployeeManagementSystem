@@ -9,12 +9,16 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
     private readonly IValidator<CreateEmployeeDto> _validator; // 2. Add the bouncer
+    private readonly IValidator<UpdateEmployeeDto> _updateValidator; // 1. Add the new Update bouncer
 
     // Dependency Injection: The interface is injected here!
-    public EmployeeService(IEmployeeRepository repository, IValidator<CreateEmployeeDto> validator)
+    public EmployeeService(IEmployeeRepository repository, 
+                           IValidator<CreateEmployeeDto> validator,
+                           IValidator<UpdateEmployeeDto> updateValidator)
     {
         _repository = repository;
         _validator = validator;
+        _updateValidator = updateValidator;
     }
 
     public async Task<IEnumerable<EmployeeDto>> GetAllEmployeesAsync()
@@ -81,8 +85,18 @@ public class EmployeeService : IEmployeeService
 
     public async Task UpdateEmployeeAsync(UpdateEmployeeDto dto)
     {
+        // 1. Check the rules before doing anything else!
+
+        var validationResult = await _updateValidator.ValidateAsync(dto);
+        if (!validationResult.IsValid)
+        {
+            var errors = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+            throw new ArgumentException($"Validation failed: {errors}");
+        }
+
+
         var existing = await _repository.GetByIdAsync(dto.Id);
-        if (existing == null) throw new Exception("Employee not found");
+        if (existing == null) throw new KeyNotFoundException($"Employee with ID {dto.Id} was not found.");
 
         existing.FirstName = dto.FirstName;
         existing.LastName = dto.LastName;

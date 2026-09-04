@@ -13,3 +13,14 @@ Content-Type: application/json
   "salary": -500, 
   "departmentId": 1
 }
+
+###
+PUT {{EmployeeManagement.API_HostAddress}}/api/employee/999
+Content-Type: application/json
+
+{
+  "id": 999,
+  "firstName": "Akalanka",
+  "lastName": "Doe",
+  "salary": 500
+}

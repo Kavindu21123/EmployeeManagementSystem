@@ -4,7 +4,7 @@ GET {{EmployeeManagement.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
-POST {{EmployeeManagement.API_HostAddress}}/api/employee
+GET {{EmployeeManagement.API_HostAddress}}/api/Employee
 Content-Type: application/json
 
 {
@@ -15,12 +15,34 @@ Content-Type: application/json
 }
 
 ###
-PUT {{EmployeeManagement.API_HostAddress}}/api/employee/999
+GET {{EmployeeManagement.API_HostAddress}}/api/employee
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg4NTMwNjIzLCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnRBUEkiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnRGcm9udGVuZCJ9.NJWRiPf18ULeewW43udcYx4xmfGoAE-fzyH_Uqh4rAw
+Content-Type: application/json
+
+
+
+###
+POST {{EmployeeManagement.API_HostAddress}}/api/Auth/login
 Content-Type: application/json
 
 {
-  "id": 999,
-  "firstName": "Akalanka",
-  "lastName": "Doe",
-  "salary": 500
+  "username": "boss",
+  "password": "SuperSecretPassword!"
+}
+ 
+###
+DELETE {{EmployeeManagement.API_HostAddress}}/api/Employee/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg4NTMwNjIzLCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnRBUEkiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnRGcm9udGVuZCJ9.NJWRiPf18ULeewW43udcYx4xmfGoAE-fzyH_Uqh4rAw
+
+###
+POST {{EmployeeManagement.API_HostAddress}}/api/Employee
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYm9zcyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzg4NTMwNjIzLCJpc3MiOiJFbXBsb3llZU1hbmFnZW1lbnRBUEkiLCJhdWQiOiJFbXBsb3llZU1hbmFnZW1lbnRGcm9udGVuZCJ9.NJWRiPf18ULeewW43udcYx4xmfGoAE-fzyH_Uqh4rAw
+Content-Type: application/json
+
+{
+  "firstName": "Kavindu",
+  "lastName": "Sandeepa",
+  "email": "kavindu.sandeepa@example.com",
+  "salary": -75000,
+  "departmentId": 1
 }

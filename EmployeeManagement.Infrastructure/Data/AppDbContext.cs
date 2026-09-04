@@ -1,3 +1,4 @@
+using EmployeeManagement.Domain;
 using EmployeeManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -13,6 +14,7 @@ public class AppDbContext : DbContext
 
     // These become your database tables!
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<Department> Departments { get; set; }
 
     // This method tells EF Core to look for our custom Configurations (Step 2)

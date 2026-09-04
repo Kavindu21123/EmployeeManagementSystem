@@ -1,11 +1,13 @@
 using EmployeeManagement.Application.DTOs;
 using EmployeeManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeManagement.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize] // <--- THE ELECTRONIC LOCK
 public class EmployeeController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
@@ -36,8 +38,12 @@ public class EmployeeController : ControllerBase
 
     // POST: api/employee
     [HttpPost]
+    [Authorize(Roles = "Admin")] // <--- THE VIP LOCK
     public async Task<IActionResult> Create(CreateEmployeeDto dto)
     {
+        string currentUser = User.Identity?.Name ?? "Unknown";
+        Console.WriteLine($"ALERT: Employee creation accessed by {currentUser}");
+
         var createdEmployee = await _employeeService.CreateEmployeeAsync(dto);
         
         // Returns HTTP 201 (Created) and points to the GET endpoint for the new resource
